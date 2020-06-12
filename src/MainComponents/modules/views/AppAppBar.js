@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
+import {Link as ToHome} from "react-router-dom";
 import AppBar from '../components/AppBar';
 import Toolbar, { styles as toolbarStyles } from '../components/Toolbar';
+import { Redirect } from 'react-router-dom';
 
 const styles = (theme) => ({
   title: {
@@ -35,51 +36,51 @@ const styles = (theme) => ({
   },
 });
 
-function AppAppBar(props) {
-  const { classes } = props;
 
-  return (
-    <div>
-      <AppBar position="fixed">
-        <Toolbar className={classes.toolbar}>
-          <div className={classes.left} />
-          <Link
-            variant="h6"
-            underline="none"
-            color="inherit"
-            className={classes.title}
+class AppAppBar extends Component {
+  constructor(props) {
+    super(props)
+  }
+  handleRedirect = () => {
+    return(
+      <Redirect to="/Home"/>
 
-          >
-            <img src="/logo.svg" height="40px" alt=""/>
-            {'E X P E N S I F Y'}
-          </Link>
-          <div className={classes.right}>
+    )
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div>
+        <AppBar position="fixed">
+          <Toolbar className={classes.toolbar}>
+            <div className={classes.left} />
+            <ToHome to="/" style={{textDecoration:"none", color:"white"}}>
             <Link
+              variant="h6"
+              underline="none"
               color="inherit"
-              variant="h6"
-              underline="none"
-              className={classes.rightLink}
-            >
-              {'Sign In'}
-            </Link>
-            <Link
-              variant="h6"
-              underline="none"
-              className={clsx(classes.rightLink, classes.linkSecondary)}
+              className={classes.title}
 
             >
-              {'Sign Up'}
+
+              <img src="/logo.svg" height="40px" alt="" />
+              {'E X P E N S I F Y'}
             </Link>
-          </div>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.placeholder} />
-    </div>
-  );
+            </ToHome>
+            <div className={classes.right}>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <div className={classes.placeholder} />
+      </div>
+    );
+  }
 }
-
 AppAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
 
 export default withStyles(styles)(AppAppBar);

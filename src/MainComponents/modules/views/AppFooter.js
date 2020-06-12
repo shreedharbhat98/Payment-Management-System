@@ -65,13 +65,13 @@ export default function AppFooter() {
             >
               <Grid item className={classes.icons}>
                 <a className={classes.icon} href="#">
-                  <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+                  <i class="fa fa-facebook-official fa-2x" aria-hidden="true"></i>
                 </a>
                 <a href="#" className={classes.icon}>
-                  <i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i>
+                  <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
                 </a>
                 <a href="#" className={classes.icon}>
-                  <i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i>
+                  <i class="fa fa-linkedin-square fa-2x" aria-hidden="true"></i>
                 </a>
               </Grid>
             </Grid>
