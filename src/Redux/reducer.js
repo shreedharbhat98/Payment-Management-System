@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, ADD_CATEGORY, ADD_USERS, REMOVE_CATEGORY, DELETE_EXPENSE, REMOVE_USERS } from "./actionTypes";
+import { ADD_EXPENSE, ADD_CATEGORY, ADD_USERS, REMOVE_CATEGORY,EDIT_EXPENSE, DELETE_EXPENSE, REMOVE_USERS } from "./actionTypes";
 import { v4 as uuidv4 } from 'uuid';
 
 const initState = {
@@ -41,8 +41,18 @@ const reducer = (state = initState, { type, payload }) => {
             }
         }
 
-        case DELETE_EXPENSE:
-            return {...state}
+        case DELETE_EXPENSE:{
+            return {
+                ...state, data : state.data.filter(item => item.id !== payload)
+            }
+
+        }
+        case EDIT_EXPENSE:{
+            return {
+                ...state, data : state.data.filter(item => item.id !== payload)
+            }
+
+        }
         case ADD_CATEGORY:{
             return {
                  ...state, category : [...state.category, payload]

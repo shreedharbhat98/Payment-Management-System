@@ -3,4 +3,5 @@ export const ADD_USERS = "ADD_USERS";
 export const REMOVE_USERS = "REMOVE_USERS";
 export const ADD_CATEGORY = "ADD_CATEGORY";
 export const REMOVE_CATEGORY= "REMOVE_CATEGORY";
-export const DELETE_EXPENSE = "DELETE_EXPENSE"
+export const DELETE_EXPENSE = "DELETE_EXPENSE";
+export const EDIT_EXPENSE = "EDIT_EXPENSE"

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DashboardNavbar from "./DashboardNavbar";
 import { connect } from "react-redux"
-import { addExpense } from "../../Redux/action"
+import { addExpense, deleteExpense } from "../../Redux/action"
 
 class Dashboard extends Component {
     constructor(props) {
@@ -21,7 +21,6 @@ class Dashboard extends Component {
     }
     handleClick = (e) => {
         e.preventDefault()
-
         this.props.addExpense(this.state)
         this.setState({
             description: "",
@@ -31,7 +30,19 @@ class Dashboard extends Component {
             type: ""
         }, () => { })
     }
-
+handleExpense =(id)=>{
+  this.props.deleteExpense(id)
+}
+handleEdit = (item)=>{
+    this.setState({
+        description:item.title.description,
+        amount:item.title.amount,
+        user: item.title.user,
+        category: item.title.category,
+        type: item.title.type
+    },()=>{})
+    this.props.deleteExpense(item.id)
+}
     render() {
         const { users, category, type, data } = this.props
         console.log(users, category, type, data)
@@ -56,6 +67,7 @@ class Dashboard extends Component {
                                         <div className="col">
                                             <label>User :</label>
                                             <select onChange={this.handleChange} name="user" value={this.state.user} className="form-control">
+                                            <option value="">Select user</option>
                                                 {users?.map(item =>
                                                     <option key={item.id} value={item.name}>{item.name}</option>
                                                 )}
@@ -63,7 +75,9 @@ class Dashboard extends Component {
                                         </div>
                                         <div className="col">
                                             <label>Category :</label>
-                                            <select onChange={this.handleChange} name="user" value={this.state.category} className="form-control">
+                                            <select onChange={this.handleChange} name="category" value={this.state.category} className="form-control">
+                                            <option value="">Select Category</option>
+
                                                 {category?.map(item =>
                                                     <option key={item.id} value={item.title}>{item.title}</option>
                                                 )}
@@ -72,6 +86,8 @@ class Dashboard extends Component {
                                         <div className="col">
                                             <label>Type :</label>
                                             <select onChange={this.handleChange} name="type" value={this.state.type} className="form-control">
+                                            <option value="">Select Type</option>
+
                                                 {type?.map((item, index) =>
                                                     <option key={index} value={item}>{item}</option>
                                                 )}
@@ -100,15 +116,19 @@ class Dashboard extends Component {
                                             <th scope="col">Category</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Amount</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {data?.map(item =>
-                                            <tr key={item.id}>
+                                            <tr key={item.id} onClick={()=>this.handleEdit(item)}>
                                                 <td>{item.title.user} </td>
                                                 <td>{item.title.category} </td>
                                                 <td>{item.title.description}</td>
                                                 <td>{item.title.amount} </td>
+                                                <td>
+                                                    <button onClick={()=>this.handleExpense(item.id)} className="btn m-1 btn-danger btn-sm float-right">Delete</button>
+                                                </td>
                                             </tr>
 
                                         )}
@@ -132,7 +152,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     addExpense: payload => dispatch(addExpense(payload)),
-    //  : payload => dispatch()
+     deleteExpense: payload => dispatch(deleteExpense(payload))
 })
 
 export default connect(
