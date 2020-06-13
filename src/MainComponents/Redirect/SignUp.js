@@ -1,130 +1,154 @@
-import withRoot from '../modules/withRoot';
-// --- Post bootstrap -----
 import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import { Field, Form, FormSpy } from 'react-final-form';
-import Typography from '../modules/components/Typography';
-import AppFooter from '../modules/views/AppFooter';
+import { Container, Typography, Box, Grid, Link, Avatar, Button, CssBaseline, TextField } from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import styles from "./SignUp.module.css"
+import { Link as ToSignIn } from "react-router-dom"
 import AppAppBar from '../modules/views/AppAppBar';
-import AppForm from '../modules/views/AppForm';
-import { email, required } from '../modules/form/validation';
-import RFTextField from '../modules/form/RFTextField';
-import FormButton from '../modules/form/FormButton';
-import FormFeedback from '../modules/form/FormFeedback';
+import Alert from '@material-ui/lab/Alert';
 
-const useStyles = makeStyles((theme) => ({
-  form: {
-    marginTop: theme.spacing(6),
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(2),
-  },
-  feedback: {
-    marginTop: theme.spacing(2),
-  },
-}));
-const classes = useStyles();
-
-class SignUp extends Component {
+export default class SignUp extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      isSignedUp: false
+    }
   }
 
-  handleSubmit = () => {
-    alert("Hello")
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
-  // const [sent, setSent] = React.useState(false);
 
-  // const validate = (values) => {
-  //   const errors = required(['firstName', 'lastName', 'email', 'password'], values);
+  handleSubmit = (e) => {
+    const { firstName, lastName, email, password } = this.state
+    e.preventDefault();
+    if (firstName === "" || lastName === "" || email === "" || password === "") {
+      alert("Enter All Details");
+      return;
+    }
 
-  //   if (!errors.email) {
-  //     const emailError = email(values.email, values);
-  //     if (emailError) {
-  //       errors.email = email(values.email, values);
-  //     }
-  //   }
-  //   console.log(values)
-  //   return errors;
-  // };
+    console.log(this.state)
+    var User = JSON.parse(localStorage.getItem("User"))
+    if (!User) {
+      User = []
+    }
+    User.push(this.state)
+    localStorage.setItem("User", JSON.stringify(User))
+    this.handleInputBoxes()
+  }
+  handleInputBoxes = () => {
+    this.setState({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      isSignedUp: true
+    })
 
-  // const handleSubmit = (values,e) => {
-  //   alert("Hello")
-  //   e.preventDefault()Hello
+  }
+
+
   render() {
     return (
       <>
-        <>
-          <Typography variant="h3" gutterBottom marked="center" align="center">
-            Sign Up
+        <AppAppBar />
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={styles.paper}>
+            <Avatar className={styles.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
           </Typography>
-          <Typography variant="body2" align="center">
-            <Link href="/premium-themes/onepirate/sign-in/" underline="always">
-              Already have an account?
-            </Link>
-          </Typography>
-        </>
-        <>
-          <Form onSubmit={this.handleSubmit()} >
-            {({ handleSubmit2, submitting }) => (
-              <form onSubmit={handleSubmit2} className={classes.form} noValidate>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <Field
-                      autoFocus
-                      component={RFTextField}
-                      autoComplete="fname"
-                      fullWidth
-                      label="First name"
-                      name="firstName"
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Field
-                      component={RFTextField}
-                      autoComplete="lname"
-                      fullWidth
-                      label="Last name"
-                      name="lastName"
-                      required
-                    />
-                  </Grid>
+            <form onSubmit={this.handleSubmit} className={styles.form} noValidate>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    value={this.state.firstName}
+                    onChange={this.handleChange}
+                    name="firstName"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                  />
                 </Grid>
-                <Field
-                  autoComplete="email"
-                  component={RFTextField}
-                  fullWidth
-                  label="Email"
-                  margin="normal"
-                  name="email"
-                  required
-                />
-                <Field
-                  fullWidth
-                  required
-                  name="password"
-                  autoComplete="current-password"
-                  label="Password"
-                  type="password"
-                  margin="normal"
-                />
-                <FormButton
-                  className={classes.button}
-                  color="secondary"
-                  fullWidth
-                >
-                  {"sign up"}
-                </FormButton>
-              </form>
-            )}
-          </Form>
-        </>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    value={this.state.lastName}
+                    onChange={this.handleChange}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="lname"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={this.state.email}
+                    onChange={this.handleChange}
+
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                  />
+                </Grid>
+
+              </Grid>
+              {this.state.isSignedUp ? <Box style={{ marginTop: "20px" }}><Alert severity="success">Success <ToSignIn style={{ textDecoration: "none", color: "green" }} to="/SignIn">{"Please Login"}</ToSignIn> </Alert></Box> : null}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={styles.submit}
+              >
+                Sign Up
+            </Button>
+              <Grid container justify="flex-end">
+                <Grid item>
+                  <ToSignIn to="/SignIn">
+                    <Link variant="body2">
+                      Already have an account? Sign in
+                </Link>
+                  </ToSignIn>
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+          <Box mt={5}>
+          </Box>
+        </Container>
       </>
-    )
+    );
   }
 }
-export default withRoot(SignUp);

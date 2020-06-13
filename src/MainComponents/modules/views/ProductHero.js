@@ -49,7 +49,7 @@ function ProductHero(props) {
         variant="contained"
         size="large"
         className={classes.button}
-        component="a"
+        
       >
         <Link style={{textDecoration:"none", color:"white"}} to="/SignUp">
         Register
