@@ -38,9 +38,6 @@ const styles = (theme) => ({
 
 
 class AppAppBar extends Component {
-  constructor(props) {
-    super(props)
-  }
   handleRedirect = () => {
     return(
       <Redirect to="/Home"/>

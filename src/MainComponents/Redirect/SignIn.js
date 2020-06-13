@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Checkbox, FormControlLabel, Container, Typography, Box, Grid, Link, Avatar, Button, CssBaseline, TextField } from '@material-ui/core';
-import { Link as ToSignUp, Redirect, useHistory } from "react-router-dom"
+import { Link as ToSignUp, Redirect } from "react-router-dom"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import styles from "./SignUp.module.css"
 import AppAppBar from '../modules/views/AppAppBar';
-import Dashboad from "../Dashboard"
 
 
 export default class SignIn extends Component {

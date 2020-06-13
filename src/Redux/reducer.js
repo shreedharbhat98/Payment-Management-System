@@ -1,21 +1,26 @@
-import { ADD_PRODUCT, ADD_TO_CART, REMOVE_FROM_CART } from "./actionTypes";
-import data from "../Utils/productsData.json"
+import { ADD_EXPENSE, ADD_CATEGORY, ADD_USERS, REMOVE_CATEGORY, DELETE_EXPENSE } from "./actionTypes";
 
 
 const initState = {
-    productArr : [...data],
-    cartItems :[]
+   users :[],
+   category :[],
+   data :[],
+   type:['income', 'expense']
 }
 
 
 const reducer = (state = initState, { type, payload }) => {
     switch (type) {
-        case ADD_PRODUCT:
+        case ADD_EXPENSE:
             return { ...state }
-        case ADD_TO_CART:
+        case DELETE_EXPENSE:
+            return {...state}
+        case ADD_CATEGORY:
             return { ...state }
-        case REMOVE_FROM_CART:
+        case REMOVE_CATEGORY:
             return { ...state }
+        case ADD_USERS:
+            return {...state}
         default:
             return state
     }

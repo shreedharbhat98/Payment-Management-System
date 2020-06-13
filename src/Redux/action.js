@@ -1,14 +1,25 @@
-import {ADD_PRODUCT, ADD_TO_CART, REMOVE_FROM_CART}from "./actionTypes";
+import { ADD_EXPENSE, ADD_CATEGORY, ADD_USERS, REMOVE_CATEGORY, DELETE_EXPENSE } from "./actionTypes";
 
-export const addProduct = payload =>({
-    type:ADD_PRODUCT,
+export const addExpense = payload => ({
+    type: ADD_EXPENSE,
     payload
 })
-export const addToCart = payload =>({
-    type:ADD_TO_CART,
+
+export const deleteExpense = payload => ({
+    type: DELETE_EXPENSE,
     payload
 })
-export const removeFromCart = payload =>({
-    type:REMOVE_FROM_CART,
+export const addCategory = payload => ({
+    type: ADD_CATEGORY,
     payload
 })
+export const removeCategory = payload => ({
+    type: REMOVE_CATEGORY,
+    payload
+})
+
+export const addUsers = payload => ({
+    type: ADD_USERS,
+    payload
+})
+

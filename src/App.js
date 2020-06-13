@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from "react-router-dom"
 import { Provider } from 'react-redux';
-import Home from './MainComponents/Home';
 import Routes from './MainComponents/Routes';
+import store from "./Redux/store"
 
 
 class App extends Component {
@@ -10,10 +9,9 @@ class App extends Component {
   render() {
     return (
       <>
-        {/* // <Provider store={""}> */}
-        {/* <Home/> */}
+      <Provider store={store}>
         <Routes />
-        {/* </Provider> */}
+        </Provider>
       </>
     );
   }
