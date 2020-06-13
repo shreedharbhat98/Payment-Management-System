@@ -21,11 +21,7 @@ class Dashboard extends Component {
     }
     handleClick = (e) => {
         e.preventDefault()
-        const { description, amount, user, category, type } = this.state
-        if (description === "" || amount === "" || user === "" || category === "" || type === "") {
-            alert("Fill All Fields");
-            return;
-        }
+
         this.props.addExpense(this.state)
         this.setState({
             description: "",
@@ -61,7 +57,7 @@ class Dashboard extends Component {
                                             <label>User :</label>
                                             <select onChange={this.handleChange} name="user" value={this.state.user} className="form-control">
                                                 {users?.map(item =>
-                                                    <option value={item}>{item}</option>
+                                                    <option key={item.id} value={item.name}>{item.name}</option>
                                                 )}
                                             </select>
                                         </div>
@@ -69,15 +65,15 @@ class Dashboard extends Component {
                                             <label>Category :</label>
                                             <select onChange={this.handleChange} name="user" value={this.state.category} className="form-control">
                                                 {category?.map(item =>
-                                                    <option value={item}>{item}</option>
+                                                    <option key={item.id} value={item.title}>{item.title}</option>
                                                 )}
                                             </select>
                                         </div>
                                         <div className="col">
                                             <label>Type :</label>
                                             <select onChange={this.handleChange} name="type" value={this.state.type} className="form-control">
-                                                {type?.map(item =>
-                                                    <option value={item}>{item}</option>
+                                                {type?.map((item, index) =>
+                                                    <option key={index} value={item}>{item}</option>
                                                 )}
                                             </select>
 
@@ -101,6 +97,7 @@ class Dashboard extends Component {
                                     <thead>
                                         <tr>
                                             <th scope="col">User</th>
+                                            <th scope="col">Category</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Amount</th>
                                         </tr>
@@ -108,9 +105,10 @@ class Dashboard extends Component {
                                     <tbody>
                                         {data?.map(item =>
                                             <tr key={item.id}>
-                                                <th>{item.user} </th>
-                                                <td>{item.description}</td>
-                                                <td>{item.amount} </td>
+                                                <td>{item.title.user} </td>
+                                                <td>{item.title.category} </td>
+                                                <td>{item.title.description}</td>
+                                                <td>{item.title.amount} </td>
                                             </tr>
 
                                         )}

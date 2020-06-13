@@ -27,7 +27,10 @@ export const removeCategory = payload => ({
 
 export const addUsers = payload => ({
     type: ADD_USERS,
-    payload
+    payload :{
+        name :payload,
+        id:uuidv4()
+    }
 })
 
 export const removeUsers = payload => ({

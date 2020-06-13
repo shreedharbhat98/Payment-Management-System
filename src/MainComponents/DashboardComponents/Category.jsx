@@ -26,6 +26,10 @@ class Category extends Component {
             category: "",
         }, () => { })
     }
+    handleRemove=(e,id)=>{
+            e.preventDefault()
+            this.props.removeCategory(id)
+    }
 
     render() {
         const { category } = this.props
@@ -61,7 +65,7 @@ class Category extends Component {
                                                     <tr key={item.id}>
                                                         <td>
                                                             {item.title}
-                                                            <button onClick={()=>{removeCategory(item.id)}} className="btn btn-danger btn-sm float-right">Delete</button>
+                                                            <button onClick={(e)=>this.handleRemove(e, item.id)} className="btn btn-danger btn-sm float-right">Delete</button>
                                                         </td>
                                                     </tr>
                                             )}
