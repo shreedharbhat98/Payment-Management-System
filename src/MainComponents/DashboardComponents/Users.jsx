@@ -1,16 +1,90 @@
 import React, { Component } from "react";
 import DashboardNavbar from "./DashboardNavbar";
+import { connect } from "react-redux"
+import { addCategory, removeCategory } from "../../Redux/action"
 
- class Users extends Component{
-    render(){
-        return(
+class Users extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            category: "",
+        }
+    }
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    handleClick = (e) => {
+        e.preventDefault()
+        this.setState({
+            category: "",
+        }, () => { })
+    }
+
+    render() {
+        const { category } = this.props
+        console.log(category)
+        return (
             <>
-               <DashboardNavbar/>
-               
+                <DashboardNavbar />
+                <div className="container">
+                    <div className="row">
+                        <div className="col" style={{ maxWidth: "800px", margin: "auto" }}>
+                            <form>
+                                <div className="form-group">
+                                    <h2 className="text-center">Manage Categories</h2>
+                                    <label>Add Category :</label>
+                                    <input onChange={this.handleChange} value={this.state.category} name="category" className="form-control" placeholder="Add your category" />
+                                </div>
+                                <div className="form-group  text-center">
+                                    <button
+                                        className="btn btn-primary btn-block"
+                                        onClick={this.handleClick}
+                                    >ADD</button>
+                                </div>
+                                <div className="form-group mt-5">
+                                    {!category.length == 0 ?
+                                    <table className="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Categories already available</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {category?.map((item, index) =>
+                                                    <tr key={index}>
+                                                        <td>
+                                                            {item}
+                                                            <button onClick={()=>{removeCategory(index)}} className="btn btn-danger btn-sm float-right">Delete</button>
+                                                        </td>
+                                                    </tr>
+                                            )}
+                                        </tbody>
+                                    </table> :null
+                            }
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </>
         )
-
     }
 }
+const mapStateToProps = state => ({
+    category: state.category,
+})
 
-export default Users
+const mapDispatchToProps = dispatch => ({
+    addCategory: payload => dispatch(addCategory(payload)),
+    removeCategory: payload => dispatch(removeCategory(payload))
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+
+)(Users);

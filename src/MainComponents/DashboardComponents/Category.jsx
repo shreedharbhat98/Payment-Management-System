@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DashboardNavbar from "./DashboardNavbar";
 import { connect } from "react-redux"
-import { addCategory } from "../../Redux/action"
+import { addCategory, removeCategory } from "../../Redux/action"
 
 class Category extends Component {
     constructor(props) {
@@ -17,16 +17,19 @@ class Category extends Component {
     }
     handleClick = (e) => {
         e.preventDefault()
-
-        this.props.addCategory(this.state)
+        if(this.state.category === ""){
+            alert("Enter Category")
+            return;
+        }
+        this.props.addCategory(this.state.category)
         this.setState({
             category: "",
         }, () => { })
     }
 
     render() {
-        const { category} = this.props
-        console.log( category)
+        const { category } = this.props
+        console.log(category)
         return (
             <>
                 <DashboardNavbar />
@@ -36,41 +39,8 @@ class Category extends Component {
                             <form>
                                 <div className="form-group">
                                     <h2 className="text-center">Manage Categories</h2>
-                                    <label>Description :</label>
-                                    <input onChange={this.handleChange} value={this.state.description} name="description" className="form-control" placeholder="On What you spent ?" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Amount :</label>
-                                    <input onChange={this.handleChange} value={this.state.amount} name="amount" className="form-control" placeholder="How much you spent ?" />
-                                </div>
-                                <div className="form-group">
-                                    <div className="row">
-                                        <div className="col">
-                                            <label>User :</label>
-                                            <select onChange={this.handleChange} name="user" value={this.state.user} className="form-control">
-                                                {users?.map(item =>
-                                                    <option value={item}>{item}</option>
-                                                )}
-                                            </select>
-                                        </div>
-                                        <div className="col">
-                                            <label>Category :</label>
-                                            <select onChange={this.handleChange} name="user" value={this.state.category} className="form-control">
-                                                {category?.map(item =>
-                                                    <option value={item}>{item}</option>
-                                                )}
-                                            </select>
-                                        </div>
-                                        <div className="col">
-                                            <label>Type :</label>
-                                            <select onChange={this.handleChange} name="type" value={this.state.type} className="form-control">
-                                                {type?.map(item =>
-                                                    <option value={item}>{item}</option>
-                                                )}
-                                            </select>
-
-                                        </div>
-                                    </div>
+                                    <label>Add Category :</label>
+                                    <input onChange={this.handleChange} value={this.state.category} name="category" className="form-control" placeholder="Add your category" />
                                 </div>
                                 <div className="form-group  text-center">
                                     <button
@@ -78,51 +48,44 @@ class Category extends Component {
                                         onClick={this.handleClick}
                                     >ADD</button>
                                 </div>
+                                <div className="form-group mt-5">
+                                    {!category.length == 0 ?
+                                    <table className="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Categories already available</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {category?.map((item) =>
+                                                    <tr key={item.id}>
+                                                        <td>
+                                                            {item.title}
+                                                            <button onClick={()=>{removeCategory(item.id)}} className="btn btn-danger btn-sm float-right">Delete</button>
+                                                        </td>
+                                                    </tr>
+                                            )}
+                                        </tbody>
+                                    </table> :null
+                            }
+                                </div>
+
                             </form>
                         </div>
                     </div>
-                    {!data.length == 0 ?
-                        <div className="row mt-4 text-center">
-                            <div className="col" style={{ maxWidth: "800px", margin: "auto" }}>
-                                <h2 className="p-2">Your Expenses</h2>
-                                <table className="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">User</th>
-                                            <th scope="col">Description</th>
-                                            <th scope="col">Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {data?.map(item =>
-                                            <tr key={item.id}>
-                                                <th>{item.user} </th>
-                                                <td>{item.description}</td>
-                                                <td>{item.amount} </td>
-                                            </tr>
-
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> : null
-                    }
                 </div>
+
             </>
         )
     }
 }
-// export default Dashboard
 const mapStateToProps = state => ({
-    users: state.users,
     category: state.category,
-    type: state.type,
-    data: state.data
 })
 
 const mapDispatchToProps = dispatch => ({
     addCategory: payload => dispatch(addCategory(payload)),
-    //  : payload => dispatch()
+    removeCategory: payload => dispatch(removeCategory(payload))
 })
 
 export default connect(
