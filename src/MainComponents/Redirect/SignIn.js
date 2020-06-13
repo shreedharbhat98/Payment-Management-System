@@ -39,9 +39,12 @@ export default class SignIn extends Component {
     const {isAuth} = this.state
     if(isAuth){
       return(
-        <Redirect to="/Dashboard"/>
+        <Redirect to='/Dashboard'/>
       )
     }
+    else{
+
+
     return (
       <>
         <AppAppBar />
@@ -115,4 +118,6 @@ export default class SignIn extends Component {
       </>
     );
   }
+}
+
 }
