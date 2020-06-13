@@ -2,17 +2,22 @@ import { ADD_EXPENSE, ADD_CATEGORY, ADD_USERS, REMOVE_CATEGORY, DELETE_EXPENSE }
 
 
 const initState = {
-   users :[],
-   category :[],
+   users :['Shreedhar', 'Akshay'],
+   category :['Accomodation', 'Food', 'Transportation'],
    data :[],
-   type:['income', 'expense']
+   type:['Income', 'Expense']
 }
 
 
 const reducer = (state = initState, { type, payload }) => {
+    console.log(payload)
     switch (type) {
-        case ADD_EXPENSE:
-            return { ...state }
+        case ADD_EXPENSE:{
+            return{
+                ...state, data : [...state.data, payload]
+            }
+        }
+
         case DELETE_EXPENSE:
             return {...state}
         case ADD_CATEGORY:

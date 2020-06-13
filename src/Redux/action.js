@@ -1,8 +1,12 @@
 import { ADD_EXPENSE, ADD_CATEGORY, ADD_USERS, REMOVE_CATEGORY, DELETE_EXPENSE } from "./actionTypes";
+import { v4 as uuidv4 } from 'uuid';
 
 export const addExpense = payload => ({
     type: ADD_EXPENSE,
-    payload
+    payload:{
+        title : payload,
+        id:uuidv4(),
+    }
 })
 
 export const deleteExpense = payload => ({
