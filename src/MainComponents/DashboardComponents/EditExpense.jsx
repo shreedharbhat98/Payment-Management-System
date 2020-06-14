@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import DashboardNavbar from "./DashboardNavbar";
+import { Redirect } from "react-router-dom"
 import { connect } from "react-redux"
-import { addExpense, deleteExpense } from "../../Redux/action"
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import { Link } from "react-router-dom"
-import DateFnsUtils from '@date-io/date-fns';
-import { KeyboardDatePicker,MuiPickersUtilsProvider, } from '@material-ui/pickers';
+import { editExpense } from "../../Redux/action"
 
-class Dashboard extends Component {
+class EditExpense extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -17,8 +13,21 @@ class Dashboard extends Component {
             user: "",
             category: "",
             type: "",
-            date: ""
+            date :""
         }
+    }
+    componentDidMount() {
+        const { id } = this.props.match.params
+        const { data} = this.props
+        data.map(item =>
+            item.id === id ? this.setState({
+                description: item.title.description,
+                amount: item.title.amount,
+                user: item.title.user,
+                category: item.title.category,
+                type: item.title.type,
+                date : item.title.date
+            }) : null)
     }
     handleChange = (e) => {
         this.setState({
@@ -27,27 +36,25 @@ class Dashboard extends Component {
     }
     handleClick = (e) => {
         e.preventDefault()
-        const { amount, description } = this.state
-        if (amount === "" || description === "") {
-            alert("Enter All The Fields");
-            return;
+        const { id } = this.props.match.params
+        let payload = {
+            description : this.state.description,
+            amount : this.state.amount,
+            user :  this.state.user,
+            category : this.state.category,
+            type : this.state.type,
+            uid : id,
+            date : this.state.date
         }
-        this.props.addExpense(this.state)
-        this.setState({
-            description: "",
-            amount: "",
-            user: "",
-            category: "",
-            type: ""
-        }, () => { })
+        this.props.editExpense(payload)
+        // console.log(this.props.history)
+        this.props.history.push({pathname :"/Dashboard"})
+
     }
-    handleExpense = (id) => {
-        this.props.deleteExpense(id)
-    }
+
     render() {
-        const { users, category, type, data } = this.props
-        const { match } = this.props
-        console.log(data)
+        const { users, category, type } = this.props
+
         return (
             <>
                 <DashboardNavbar />
@@ -56,7 +63,7 @@ class Dashboard extends Component {
                         <div className="col" style={{ maxWidth: "800px", margin: "auto" }}>
                             <form>
                                 <div className="form-group">
-                                    <h2 className="text-center">ADD EXPENSE</h2>
+                                    <h2 className="text-center">EDIT EXPENSE</h2>
                                     <label>Description :</label>
                                     <input onChange={this.handleChange} value={this.state.description} name="description" className="form-control" placeholder="On What you spent ?" />
                                 </div>
@@ -66,10 +73,9 @@ class Dashboard extends Component {
                                 </div>
                                 <div className="form-group">
                                     <div className="row">
-                                        <div className="col">
+                                    <div className="col">
                                             <label>Pic a Date : </label>
-                                    <input onChange={this.handleChange} value={this.state.date} type="date" name="date" className="form-control" placeholder="How much you spent ?" />
-
+                                            <input onChange={this.handleChange} value={this.state.date} type="date" name="date" className="form-control" placeholder="How much you spent ?" />
 
                                         </div>
                                         <div className="col">
@@ -108,55 +114,18 @@ class Dashboard extends Component {
                                     <button
                                         className="btn btn-primary btn-block"
                                         onClick={this.handleClick}
-                                    >ADD</button>
+                                    >UPDATE</button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    {!data.length == 0 ?
-                        <div className="row mt-4 text-center">
-                            <div className="col" style={{ maxWidth: "1000px", margin: "auto" }}>
-                                <h2 className="p-2">Your Expenses</h2>
-                                <table className="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">User</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Description</th>
-                                            <th scope="col">Amount</th>
-                                            <th scope="col">Type</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {data?.map(item =>
-                                            <tr  key={item.id}>
-                                                <td>{item.title.date} </td>
-                                                <td>{item.title.user} </td>
-                                                <td>{item.title.category} </td>
-                                                <td>{item.title.description}</td>
-                                                <td>{item.title.amount} </td>
-                                                <td>{item.title.type} </td>
-                                                <td>
-                                                    <Link to={`${match.url}/${item.id}`} id={item.id}><EditIcon /> </Link>
-                                                </td>
-                                                <td>
-                                                    <DeleteIcon
-                                                        onClick={() => this.handleExpense(item.id)}
-                                                    ></DeleteIcon>
-                                                </td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> : null
-                    }
                 </div>
             </>
+
         )
     }
 }
+
 const mapStateToProps = state => ({
     users: state.users,
     category: state.category,
@@ -165,12 +134,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    addExpense: payload => dispatch(addExpense(payload)),
-    deleteExpense: payload => dispatch(deleteExpense(payload))
+    editExpense: (payload) => dispatch(editExpense(payload))
 })
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
 
-)(Dashboard);
+)(EditExpense);

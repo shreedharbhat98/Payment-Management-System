@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import DashboardNavbar from "./DashboardNavbar";
 import { connect } from "react-redux"
 import { addCategory, removeCategory } from "../../Redux/action"
+import DeleteIcon from "@material-ui/icons/Delete"
+
 
 class Category extends Component {
     constructor(props) {
@@ -17,7 +19,7 @@ class Category extends Component {
     }
     handleClick = (e) => {
         e.preventDefault()
-        if(this.state.category === ""){
+        if (this.state.category === "") {
             alert("Enter Category")
             return;
         }
@@ -26,14 +28,13 @@ class Category extends Component {
             category: "",
         }, () => { })
     }
-    handleRemove=(e,id)=>{
-            e.preventDefault()
-            this.props.removeCategory(id)
+    handleRemove = (e, id) => {
+        e.preventDefault()
+        this.props.removeCategory(id)
     }
 
     render() {
         const { category } = this.props
-        console.log(category)
         return (
             <>
                 <DashboardNavbar />
@@ -44,7 +45,12 @@ class Category extends Component {
                                 <div className="form-group">
                                     <h2 className="text-center">Manage Categories</h2>
                                     <label>Add Category :</label>
-                                    <input onChange={this.handleChange} value={this.state.category} name="category" className="form-control" placeholder="Add your category" />
+                                    <input
+                                        onChange={this.handleChange}
+                                        value={this.state.category}
+                                        name="category"
+                                        className="form-control"
+                                        placeholder="Add your category" />
                                 </div>
                                 <div className="form-group  text-center">
                                     <button
@@ -54,31 +60,32 @@ class Category extends Component {
                                 </div>
                                 <div className="form-group mt-5">
                                     {!category.length == 0 ?
-                                    <table className="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Categories already available</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {category?.map((item) =>
+                                        <table className="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Categories already available</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {category?.map((item) =>
                                                     <tr key={item.id}>
                                                         <td>
                                                             {item.title}
-                                                            <button onClick={(e)=>this.handleRemove(e, item.id)} className="btn btn-danger btn-sm float-right">Delete</button>
+                                                            <DeleteIcon
+                                                                onClick={(e) => this.handleRemove(e, item.id)}
+                                                                className="float-right"
+                                                            >Delete</DeleteIcon>
                                                         </td>
                                                     </tr>
-                                            )}
-                                        </tbody>
-                                    </table> :null
-                            }
+                                                )}
+                                            </tbody>
+                                        </table> : null
+                                    }
                                 </div>
-
                             </form>
                         </div>
                     </div>
                 </div>
-
             </>
         )
     }

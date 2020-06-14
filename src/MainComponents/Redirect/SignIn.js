@@ -21,7 +21,6 @@ export default class SignIn extends Component {
     e.preventDefault()
     const {email, password} = this.state
     var data = JSON.parse(localStorage.getItem("User"))
-    console.log(data)
     for(let i=0; i < data.length; i++){
         if(data[i].email === email && data[i].password === password){
           this.setState({isAuth:true},()=>{})
