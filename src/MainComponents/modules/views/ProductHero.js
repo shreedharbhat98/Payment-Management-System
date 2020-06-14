@@ -12,7 +12,7 @@ const backgroundImage =
 const styles = (theme) => ({
   background: {
     backgroundImage: `url(${backgroundImage})`,
-    backgroundColor: '#7fc7d9', // Average color of the background image.
+    backgroundColor: '#7fc7d9',
     backgroundPosition: 'center',
   },
   button: {
@@ -36,7 +36,6 @@ function ProductHero(props) {
 
   return (
     <ProductHeroLayout backgroundClassName={classes.background}>
-      {/* Increase the network loading priority of the background image. */}
       <img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
       <Typography color="inherit" align="center" variant="h2" marked="center">
         App gets your money into shape
@@ -48,13 +47,10 @@ function ProductHero(props) {
         color="secondary"
         variant="contained"
         size="large"
-        className={classes.button}
-        
-      >
+        className={classes.button}>
         <Link style={{textDecoration:"none", color:"white"}} to="/SignUp">
-        Register
+        Get Started
         </Link>
-
       </Button>
     </ProductHeroLayout>
   );

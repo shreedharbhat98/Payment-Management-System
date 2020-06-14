@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DashboardNavbar from "./DashboardNavbar";
-import { Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 import { editExpense } from "../../Redux/action"
 

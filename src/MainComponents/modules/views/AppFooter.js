@@ -64,15 +64,15 @@ export default function AppFooter() {
               spacing={2}
             >
               <Grid item className={classes.icons}>
-                <a className={classes.icon} href="#">
+                <Link className={classes.icon} >
                   <i className="fa fa-facebook-official fa-2x" aria-hidden="true"></i>
-                </a>
-                <a href="/" className={classes.icon}>
+                </Link>
+                <Link className={classes.icon}>
                   <i className="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
-                </a>
-                <a href="/" className={classes.icon}>
+                </Link>
+                <Link className={classes.icon}>
                   <i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i>
-                </a>
+                </Link>
               </Grid>
             </Grid>
           </Grid>
