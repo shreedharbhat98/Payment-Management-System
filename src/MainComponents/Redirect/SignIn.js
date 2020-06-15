@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Checkbox, FormControlLabel, Container, Typography, Box, Grid, Link, Avatar, Button, CssBaseline, TextField } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { Link as ToSignUp, Redirect } from "react-router-dom"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import styles from "./SignUp.module.css"
@@ -12,7 +13,8 @@ export default class SignIn extends Component {
     this.state = {
       email: "",
       password: "",
-      isAuth : false
+      isAuth : false,
+      isNotAuth : false
 
     }
   }
@@ -24,12 +26,15 @@ export default class SignIn extends Component {
     for(let i=0; i < data.length; i++){
         if(data[i].email === email && data[i].password === password){
           this.setState({isAuth:true},()=>{})
+        }else{
+          this.setState({isNotAuth:true},()=>{})
         }
     }
   }
   handleChange =(e)=>{
     this.setState({
-      [e.target.name] : e.target.value
+      [e.target.name] : e.target.value,
+      isNotAuth : false
     })
   }
 
@@ -87,6 +92,7 @@ export default class SignIn extends Component {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
+             { this.state.isNotAuth ? <Alert severity="error">Invalid Credentials!</Alert> : ""}
               <Button
                 type="submit"
                 fullWidth

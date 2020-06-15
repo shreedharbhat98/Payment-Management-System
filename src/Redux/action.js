@@ -13,18 +13,12 @@ export const deleteExpense = payload => ({
     type: DELETE_EXPENSE,
     payload
 })
-export const editExpense = payload => (
-    // console.log("action"),
-    // console.log(payload)
-    // )
-
-    {
+export const editExpense = payload => ({
     type: EDIT_EXPENSE,
     payload :{
         title : payload,
         id : payload.uid
-}
-})
+}})
 
 
 export const addCategory = payload => ({

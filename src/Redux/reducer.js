@@ -7,10 +7,6 @@ const initState = {
             name: 'Shreedhar',
             id: uuidv4()
         },
-        {
-            name: 'Akshay',
-            id: uuidv4()
-        },
     ],
 
 
