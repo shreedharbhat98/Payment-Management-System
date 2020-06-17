@@ -24,7 +24,7 @@ class DashboardNavbar extends Component {
                                 <Link to="/Dashboard" style={{ color: "white", fontWeight: "bold" }} className="nav-link">Home </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/Category" style={{ color: "white", fontWeight: "bold" }} className="nav-link">Category </Link>
+                                <Link to="/Category" style={{ color: "white", fontWeight: "bold" }} className="nav-link">Categories </Link>
                             </li>
 
                             <li className="nav-item">
