@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import DashboardNavbar from "./DashboardNavbar";
 import { connect } from "react-redux"
-import { addExpense, deleteExpense } from "../../Redux/action"
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import { Link } from "react-router-dom"
-import Chart from "./Chart"
-
+import { addExpense } from "../../Redux/action"
+import {Alert} from '@material-ui/lab';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -14,38 +10,40 @@ class Dashboard extends Component {
         this.state = {
             description: "",
             amount: "",
-            user: "",
             category: "",
             type: "",
-            date: ""
+            date: "",
+            isAdded:false
         }
     }
     handleChange = (e) => {
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+            isAdded : false
         })
     }
     handleClick = (e) => {
         e.preventDefault()
-        const { amount, description } = this.state
-        if (amount === "" || description === "") {
+        const { amount, description,type, category, date } = this.state
+        if (amount === "" || description === "" || type==="" || category === "" ) {
             alert("Enter All The Fields");
             return;
         }
-        this.props.addExpense(this.state)
+        let object = { description, amount, category, type, date}
+        this.props.addExpense(object)
         this.setState({
             description: "",
             amount: "",
-            user: "",
             category: "",
-            type: ""
+            type: "",
+            isAdded:true
         }, () => { })
+
     }
-    handleExpense = (id) => {
-        this.props.deleteExpense(id)
-    }
+
+
     render() {
-        const { match,users, category, type, data } = this.props
+        const { category, type} = this.props
         return (
             <>
                 <DashboardNavbar />
@@ -53,7 +51,7 @@ class Dashboard extends Component {
                     <div className="row">
                         <div className="col">
                             <div className="row">
-                                <div className="col" style={{ maxWidth: "800px", margin: "auto" }}>
+                                <div className="col" style={{ maxWidth: "1000px", margin: "auto" }}>
                                     <form>
                                         <div className="form-group">
                                             <h2 className="text-center">ADD EXPENSE</h2>
@@ -67,20 +65,10 @@ class Dashboard extends Component {
                                         <div className="form-group">
                                             <div className="row">
                                                 <div className="col">
-                                                    <label>Pic a Date : </label>
+                                                    <label>Pick a Date : </label>
                                                     <input onChange={this.handleChange} value={this.state.date} type="date" name="date" className="form-control" placeholder="How much you spent ?" />
-
-
                                                 </div>
-                                                <div className="col">
-                                                    <label>User :</label>
-                                                    <select onChange={this.handleChange} name="user" value={this.state.user} className="form-control">
-                                                        <option value="">Select user</option>
-                                                        {users?.map(item =>
-                                                            <option key={item.id} value={item.name}>{item.name}</option>
-                                                        )}
-                                                    </select>
-                                                </div>
+
                                                 <div className="col">
                                                     <label>Category :</label>
                                                     <select onChange={this.handleChange} name="category" value={this.state.category} className="form-control">
@@ -113,52 +101,14 @@ class Dashboard extends Component {
                                     </form>
                                 </div>
                             </div>
-                            {!data.length == 0 ?
-                                <div className="row mt-4 text-center">
-                                    <div className="col" style={{ maxWidth: "1000px", margin: "auto" }}>
-                                        <h2 className="p-2">Your Expenses</h2>
-                                        <table className="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">User</th>
-                                                    <th scope="col">Category</th>
-                                                    <th scope="col">Description</th>
-                                                    <th scope="col">Amount</th>
-                                                    <th scope="col">Type</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {data?.map(item =>
-                                                    <tr key={item.id}>
-                                                        <td>{item.title.date} </td>
-                                                        <td>{item.title.user} </td>
-                                                        <td>{item.title.category} </td>
-                                                        <td>{item.title.description}</td>
-                                                        <td>{item.title.amount} </td>
-                                                        <td>{item.title.type} </td>
-                                                        <td>
-                                                            <Link to={`${match.url}/${item.id}`}><EditIcon /> </Link>
-                                                        </td>
-                                                        <td>
-                                                            <DeleteIcon
-                                                                onClick={() => this.handleExpense(item.id)}
-                                                            ></DeleteIcon>
-                                                        </td>
-                                                    </tr>
-                                                )}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div> : null
+                            {this.state.isAdded?
+                            <div style={{ maxWidth: "980px", margin: "auto" }}>
+                            <Alert severity="info">
+                            <strong>Transaction added successfully !!!</strong>
+                            </Alert>
+                            </div> : null
                             }
-
                         </div>
-
-                        {data.length !== 0 ?
-                        <div className="col">
-                            <Chart/>
-                        </div> : " " }
                     </div>
 
                 </div>
@@ -167,7 +117,6 @@ class Dashboard extends Component {
     }
 }
 const mapStateToProps = state => ({
-    users: state.users,
     category: state.category,
     type: state.type,
     data: state.data
@@ -175,7 +124,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     addExpense: payload => dispatch(addExpense(payload)),
-    deleteExpense: payload => dispatch(deleteExpense(payload))
 })
 
 export default connect(

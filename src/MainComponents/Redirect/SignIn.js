@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Checkbox, FormControlLabel, Container, Typography, Box, Grid, Link, Avatar, Button, CssBaseline, TextField } from '@material-ui/core';
+import { Container, Typography, Box, Grid, Avatar, Button, CssBaseline, TextField } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { Link as ToSignUp, Redirect } from "react-router-dom"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import styles from "./SignUp.module.css"
 import AppAppBar from '../modules/views/AppAppBar';
+import { connect } from "react-redux"
+import { loggedInUser } from "../../Redux/action"
 
-
-export default class SignIn extends Component {
+ class SignIn extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -15,7 +16,6 @@ export default class SignIn extends Component {
       password: "",
       isAuth : false,
       isNotAuth : false
-
     }
   }
 
@@ -23,9 +23,14 @@ export default class SignIn extends Component {
     e.preventDefault()
     const {email, password} = this.state
     var data = JSON.parse(localStorage.getItem("User"))
+    if(data === null){
+      this.setState({isNotAuth:true},()=>{})
+      return;
+    }
     for(let i=0; i < data.length; i++){
         if(data[i].email === email && data[i].password === password){
           this.setState({isAuth:true},()=>{})
+          this.props.loggedInUser(data[i].firstName)
         }else{
           this.setState({isNotAuth:true},()=>{})
         }
@@ -88,11 +93,7 @@ export default class SignIn extends Component {
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-             { this.state.isNotAuth ? <Alert severity="error">Invalid Credentials!</Alert> : ""}
+             { this.state.isNotAuth ? <Alert severity="error">Invalid Credentials!</Alert> :null}
               <Button
                 type="submit"
                 fullWidth
@@ -106,12 +107,10 @@ export default class SignIn extends Component {
                 <Grid item xs>
 
                 </Grid>
-                <Grid item>
-                  <Link variant="body2">
+                <Grid item style={{marginTop :"10px"}}>
                     <ToSignUp to="/SignUp">
                       {"Don't have an account? Sign Up"}
                     </ToSignUp>
-                  </Link>
                 </Grid>
               </Grid>
             </form>
@@ -125,3 +124,19 @@ export default class SignIn extends Component {
 }
 
 }
+const mapStateToProps = state => ({
+  users: state.users,
+  category: state.category,
+  type: state.type,
+  data: state.data
+})
+
+const mapDispatchToProps = dispatch => ({
+  loggedInUser: (payload) => dispatch(loggedInUser(payload))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+
+)(SignIn);

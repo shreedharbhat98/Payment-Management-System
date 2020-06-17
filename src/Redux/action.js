@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, DELETE_EXPENSE, EDIT_EXPENSE, ADD_CATEGORY, REMOVE_CATEGORY , ADD_USERS, REMOVE_USERS} from "./actionTypes";
+import { ADD_EXPENSE, DELETE_EXPENSE, EDIT_EXPENSE, ADD_CATEGORY, REMOVE_CATEGORY , LOGGED_IN_USER, CLEAR_STORE} from "./actionTypes";
 import { v4 as uuidv4 } from 'uuid';
 
 export const addExpense = payload => ({
@@ -33,15 +33,13 @@ export const removeCategory = (payload) => ({
     payload
 })
 
-export const addUsers = payload => ({
-    type: ADD_USERS,
-    payload: {
-        name: payload,
-        id: uuidv4()
-    }
+
+export const loggedInUser = payload =>({
+    type : LOGGED_IN_USER,
+    payload
 })
 
-export const removeUsers = payload => ({
-    type: REMOVE_USERS,
+export const clearStore = payload =>({
+    type : CLEAR_STORE,
     payload
 })

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
-import {Link as ToHome} from "react-router-dom";
+import { Link } from "react-router-dom";
 import AppBar from '../components/AppBar';
 import Toolbar, { styles as toolbarStyles } from '../components/Toolbar';
 import { Redirect } from 'react-router-dom';
@@ -39,8 +38,8 @@ const styles = (theme) => ({
 
 class AppAppBar extends Component {
   handleRedirect = () => {
-    return(
-      <Redirect to="/Home"/>
+    return (
+      <Redirect to="/Home" />
 
     )
   }
@@ -53,19 +52,18 @@ class AppAppBar extends Component {
         <AppBar position="fixed">
           <Toolbar className={classes.toolbar}>
             <div className={classes.left} />
-            <ToHome to="/" style={{textDecoration:"none", color:"white"}}>
-            <Link
-              variant="h6"
-              underline="none"
-              color="inherit"
-              className={classes.title}
+            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+              <h6
+                underline="none"
+                color="inherit"
+                className={classes.title}
+                style={{ fontWeight: "bold" }}
+              >
 
-            >
-
-              <img src="/logo.svg" height="40px" alt="" />
-              {'E X P E N S I F Y'}
+                <img src="/logo.svg" height="40px" alt="" />
+                {'E X P E N S I F Y'}
+              </h6>
             </Link>
-            </ToHome>
             <div className={classes.right}>
             </div>
           </Toolbar>

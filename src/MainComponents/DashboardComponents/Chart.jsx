@@ -8,22 +8,34 @@ class Chart extends Component {
         const { data } = this.props
         var categories = [];
         var expenses = [];
-        var nameWiseExpense = [];
-        var names = [];
+        var total = [];
+        // var names = ['Total Income', 'Total Expense'];
+
+        var totalIncome = 0;
+        var totalExpense = 0;
+
         if (data.length >= 1) {
             data.map(item => categories = [...categories, (item.title.category)])
-            data.map(item => names = [...names, (item.title.user)])
 
-            names = names.filter((val, a, c) => c.indexOf(val) === a)
 
             categories = categories.filter((val, a, c) => c.indexOf(val) === a)
-
+            // Calculated the total Income and Expense
+            for(let i=0; i < data.length; i++){
+                if(data[i].title.type === "Income")
+                    totalIncome += Number(data[i].title.amount)
+                else if(data[i].title.type === "Expense")
+                    totalExpense += Number(data[i].title.amount)
+            }
+            total.push(totalIncome, totalExpense)
             // Data for categorywise Expense start
             for (let i = 0; i < categories.length; i++) {
-                var sum = 0;
+                let sum = 0;
                 for (let j = 0; j < data.length; j++) {
-                    if (categories[i] === data[j].title.category) {
-                        sum += Number(data[j].title.amount)
+                    if(data[j].title.type === "Expense"){
+                        if (categories[i] === data[j].title.category) {
+                            sum += Number(data[j].title.amount)
+                        }
+
                     }
                 }
                 expenses.push(sum)
@@ -50,29 +62,15 @@ class Chart extends Component {
             // Data for categorywise Expense end
 
             // Data for userwise Expense start
-            for (let i = 0; i < names.length; i++) {
-                var sum = 0;
-                for (let j = 0; j < data.length; j++) {
-                    if (names[i] === data[j].title.user) {
-                        sum += Number(data[j].title.amount)
-                    }
-                }
-                nameWiseExpense.push(sum)
-            }
-            var nameWiseExpenseData = {
-                labels: names,
+            var totalData = {
+                labels: ['Total Income', 'Total Expense'],
                 datasets: [
                     {
                         label: "Expenses",
-                        data: nameWiseExpense,
+                        data: total,
                         backgroundColor: [
-                            'rgba(212, 225, 87,1.0)',
-                            'rgba(41, 182, 246,1.0)',
-                            'rgba(255, 238, 88,1.0)',
-                            'rgba(236, 64, 122,1.0)',
-                            'rgba(153, 102, 255, 0.6)',
-                            'rgba(255, 159, 64, 0.6)',
-                            'rgba(255, 99, 132, 0.6)'
+                            'rgba(139, 195, 74,1.0)',
+                            'rgba(239, 83, 80,1.0)',
                         ]
 
                     }
@@ -82,15 +80,23 @@ class Chart extends Component {
         }
         return (
             <>
+                <div className="conatiner-fluid">
+                <div className ="row pt-2 text-center">
+                <div className="col"><h6> Total Income : {totalIncome}</h6> </div>
+                <div className="col"> <h6> Total Expense : {totalExpense}</h6></div>
+                </div>
+                </div>
+                <hr/>
                 <div>
                     <h3 className="text-center">Expenses by Category </h3>
                     <hr />
-                    <Pie data={chartData} height={125}/>
+                    <Pie data={chartData} height={108}/>
                 </div>
+                <hr/>
                 <div>
-                    <h3 className="text-center">Expenses by User </h3>
+                    <h3 className="text-center">Total Income & Expense </h3>
                     <hr />
-                    <Pie data={nameWiseExpenseData} height={125}/>
+                    <Pie data={totalData} height={108}/>
                 </div>
             </>
         )

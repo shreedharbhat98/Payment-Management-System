@@ -1,18 +1,14 @@
-import { ADD_EXPENSE, ADD_CATEGORY, ADD_USERS, REMOVE_CATEGORY, EDIT_EXPENSE, DELETE_EXPENSE, REMOVE_USERS } from "./actionTypes";
+import { ADD_EXPENSE, ADD_CATEGORY, REMOVE_CATEGORY, EDIT_EXPENSE, DELETE_EXPENSE,  LOGGED_IN_USER,CLEAR_STORE } from "./actionTypes";
 import { v4 as uuidv4 } from 'uuid';
 
 const initState = {
-    users: [
-        {
-            name: 'Shreedhar',
-            id: uuidv4()
-        },
-    ],
-
-
     category: [
         {
             title: 'Accomodation',
+            id: uuidv4()
+        },
+        {
+            title: 'Salary',
             id: uuidv4()
         },
         {
@@ -24,7 +20,8 @@ const initState = {
             id: uuidv4()
         }],
     data: [],
-    type: ['Income', 'Expense']
+    type: ['Income', 'Expense'],
+    loggedInUser : ""
 }
 
 
@@ -59,14 +56,16 @@ const reducer = (state = initState, { type, payload, }) => {
                 ...state, category: state.category.filter(item => item.id !== payload)
             }
         }
-        case ADD_USERS: {
+
+        case LOGGED_IN_USER :{
             return {
-                ...state, users: [...state.users, payload]
-            }
+                ...state,
+                loggedInUser : payload
+               }
         }
-        case REMOVE_USERS: {
-            return {
-                ...state, users: state.users.filter(item => item.id !== payload)
+        case CLEAR_STORE :{
+            return{
+                ...state,
             }
         }
         default:

@@ -5,8 +5,8 @@ import SignUp from "./Redirect/SignUp";
 import SignIn from "./Redirect/SignIn";
 import Dashboard from "./DashboardComponents/Dashboard"
 import Category from "./DashboardComponents/Category";
-import Users from "./DashboardComponents/Users";
 import EditExpense from "./DashboardComponents/EditExpense";
+import Transactions from "./DashboardComponents/Transactions";
 
 export default class Routes extends Component {
     render() {
@@ -17,8 +17,8 @@ export default class Routes extends Component {
                 <Route path="/SignIn" exact render={() => <SignIn />} />
                 <Route path="/Dashboard" exact render={(props) => <Dashboard {...props}/>} />
                 <Route path="/Category" exact render={() => <Category />} />
-                <Route path="/Users" exact render={() => <Users />} />
-                <Route path="/Dashboard/:id" exact render={(props)=><EditExpense {...props}/>} />
+                <Route path="/Transactions/:id" exact render={(props)=><EditExpense {...props}/>} />
+                <Route path="/Transactions" exact render={(props)=><Transactions {...props}/>} />
             </Switch>
         )
     }

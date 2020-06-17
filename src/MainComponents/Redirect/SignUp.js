@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Typography, Box, Grid, Link, Avatar, Button, CssBaseline, TextField } from '@material-ui/core';
+import { Container, Typography, Box, Grid,Avatar, Button, CssBaseline, TextField } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import styles from "./SignUp.module.css"
 import { Link as ToSignIn } from "react-router-dom"
@@ -31,8 +31,11 @@ export default class SignUp extends Component {
       alert("Enter All Details");
       return;
     }
+    if(!this.validateEmail(email)){
+      alert("Invalid Email !!!");
+      return;
+    }
 
-    console.log(this.state)
     var User = JSON.parse(localStorage.getItem("User"))
     if (!User) {
       User = []
@@ -41,6 +44,10 @@ export default class SignUp extends Component {
     localStorage.setItem("User", JSON.stringify(User))
     this.handleInputBoxes()
   }
+  validateEmail = (email)=> {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
   handleInputBoxes = () => {
     this.setState({
       firstName: "",
@@ -137,9 +144,9 @@ export default class SignUp extends Component {
               <Grid container justify="flex-end">
                 <Grid item>
                   <ToSignIn to="/SignIn">
-                    <Link variant="body2">
+                    <div variant="body2">
                       Already have an account? Sign in
-                </Link>
+                </div>
                   </ToSignIn>
                 </Grid>
               </Grid>
