@@ -9,7 +9,7 @@ To view  demo [click here](https://payment-management-system.vercel.app/).
 To view  source code [click here](https://github.com/shreedharbhat98/Payment-Management-System).
 
 ## About
-This project is is simple expense manager where the user can keep track of the expenses
+This project is a simple expense manager where the user can keep track of the expenses
 he made and can visualize through charts.
 
 ## Getting started
