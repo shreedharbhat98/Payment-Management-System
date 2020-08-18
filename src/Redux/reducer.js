@@ -66,6 +66,7 @@ const reducer = (state = initState, { type, payload, }) => {
         case CLEAR_STORE :{
             return{
                 ...state,
+                data : []
             }
         }
         default:

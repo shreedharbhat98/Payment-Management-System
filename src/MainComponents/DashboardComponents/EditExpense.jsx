@@ -78,15 +78,6 @@ class EditExpense extends Component {
 
                                         </div>
                                         <div className="col">
-                                            <label>User :</label>
-                                            <select onChange={this.handleChange} name="user" value={this.state.user} className="form-control">
-                                                <option value="">Select user</option>
-                                                {users?.map(item =>
-                                                    <option key={item.id} value={item.name}>{item.name}</option>
-                                                )}
-                                            </select>
-                                        </div>
-                                        <div className="col">
                                             <label>Category :</label>
                                             <select onChange={this.handleChange} name="category" value={this.state.category} className="form-control">
                                                 <option value="">Select Category</option>

@@ -23,7 +23,7 @@ class Transactions extends Component {
                 <DashboardNavbar />
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col">
+                        <div className="col-md-12 col-lg-6">
                             {!data.length == 0 ?
                                 <div className="row mt-4 text-center">
                                     <div className="col" style={{ maxWidth: "1000px", margin: "auto" }}>
@@ -84,7 +84,7 @@ class Transactions extends Component {
                                 </div> : null
                             }
                         </div>
-                        <div className="col">
+                        <div className="col-md-12 col-lg-6">
                             {data.length >= 1 ? <Chart /> : null}
 
                         </div>
