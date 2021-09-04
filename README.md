@@ -17,19 +17,6 @@ he made and can visualize through charts.
 * `Clone this repository`
 * `npm install`
 
-Install dependencies :
-
-* `@date-io/date-fns`
-* `@material-ui/core`
-* `@material-ui/icons`
-* `@material-ui/lab`
-* `@material-ui/pickers`
-* `react-chartjs-2`
-* `react-redux`
-* `redux`
-* `uuid`
-* `validator`
-
 Run command 
 
 * `npm start`
